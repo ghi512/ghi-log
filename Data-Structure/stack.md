@@ -1,6 +1,6 @@
 ## Stack (스택)
 ### 정의
-<img width="689" alt="stack" src="https://github.com/ghi512/ghi-log/assets/77954741/dfd075ba-ca86-4dee-8966-3dad9828473b"><br>
+<img width="300" alt="stack" src="https://github.com/ghi512/ghi-log/assets/77954741/dfd075ba-ca86-4dee-8966-3dad9828473b"><br>
 스택은 후입선출(LIFO, Last In First Out)로 가장 마지막에 들어온 자료가 가장 먼저 처리되는 자료구조이다.<br>
 스택은 재귀 함수 호출, 역추적(backtracking), 문법 검사, 메모리 관리 등에서 다양하게 사용된다.
 <br><br>
