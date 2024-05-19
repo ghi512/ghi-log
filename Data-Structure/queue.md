@@ -67,7 +67,7 @@ print(q.size())     # 출력: 2
 <br>
 
 ### 2. collections 모듈의 deque
-deque는 double-ended queue의 약자로 양방향 큐이고, 데이터를 양방향에서 추가하고 제거할 수 있다. 속도가 리스트에 비해 굉장히 빠르다. list = O(n), deque = O(1)<br>
+deque는 double-ended queue의 약자로 양방향 큐이고, 데이터를 양방향에서 추가하고 제거할 수 있다.<br> 속도가 리스트에 비해 굉장히 빠르다. list = O(n), deque = O(1)<br>
 <details>
 <summary>사용할 수 있는 함수 목록</summary>
 
