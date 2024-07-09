@@ -84,6 +84,14 @@ instruction, data를 저장한다.<br><br>
 
 <img src="https://github.com/ghi512/ghi-log/assets/77954741/e3276537-1909-42b8-af6a-75184f037977" width=500px><br>
 
+```b = a+b;```를 수행하는 과정으로 a와 b의 초기값은 각각 3,2이다.
+- step 1,2 : a 읽어옴
+- step 3,4 : b 읽어와서 a와 더함
+- step 5,6 : b에 더한 결과 저장
+
+<details>
+<summary> fetch & execute 세부 과정 (Step 1~6)</summary>
+
 Step 1
 - fetch 단계
 - PC는 다음 수행할 명령어의 위치를 저장. 현재 수행할 명령어의 위치는 300
@@ -92,13 +100,11 @@ Step 1
   - 1940: 1(0001; Load AC from Memory) + 940(처리할 데이터의 주소; 데이터값 3)
   - 940번지에 있는 데이터를 load(메인 메모리 -> CPU의 AC)한다.
 - AC: 범용 레지스터(Accumulator). 예로 eax가 있음.
-<br>
 
 Step 2
 - execute 단계
 - PC는 다음 수행할 명령어의 위치 301로 변경됨
 - AC에 3이 저장됨
-<br>
 
 Step 3
 - fetch 단계
@@ -106,7 +112,6 @@ Step 3
 - IR의 명령어 해석
   - 5941: 5(0101; Add to AC from Memory) + 941(처리할 데이터의 메모리 주소)
   - 941번지에 있는 데이터를 add함
-<br>
 
 Step 4
 - execute 단계
@@ -119,20 +124,13 @@ Step 5
 - IR의 명령어 해석
   - 2941: 2(0010; Store AC to Memory) + 941(처리할 데이터의 메모리 주소)
   - AC에 있는 값 5를 941번지에 store함
-<br>
 
 Step 6
 - execute 단계
 - PC는 다음 수행할 명령어의 위치 303로 변경됨
 - 메모리 주소 941에 5가 저장됨
-<br>
+</details>
 
-결론
-- ```b = a+b;```를 수행하는 과정
-- 초기값: a=3, b=2
-- step 1,2 : a 읽어옴
-- step 3,4 : b 읽어와서 a와 더함
-- step 5,6 : b에 더한 결과 저장
 <br><br>
 
 #### [프로그램 수행에 필요한 다양한 작업]
@@ -152,28 +150,27 @@ Step 6
   - 출력(e.g. printf) 시 I/O 작업
 - file management
 - IPC
-<br>
 
 운영체제는 위 작업들을 수행함으로써 <u>프로그램이 수행되기 쉬운 환경</u>을 제공한다.
 <br><br>
 
 ### 📝 운영체제의 정의 (definition)
-자원을 관리하고, 추상화를 제공하는 시스템 소프트웨어
+자원을 관리하고, 가상화를 제공하는 시스템 소프트웨어
 
 #### 1) 자원 관리자 (Resource manager)
 - 자원(physical, virtual)을 관리한다
 - **Physical Resource**: CPU, DRAM, Disk, Flash, Device, Network 등
 - **Virtual Resource**: Process, Thread, Virtual memory, Page, File, Directory, Driver, Protocol, Access control, Security 등
 
-#### 2) 추상화 제공 (Virtualization, Abstraction)
-물리적 자원으로 추상적(논리적) 형태로 제공한다.
+#### 2) 가상화(추상화) 제공 (Virtualization, Abstraction)
+물리적 자원으로 논리적(추상적) 형태로 제공한다.
 
 | Resource | 1 | 2 | 3 | 4 | 5 |
 | :--: | :--: | :--: | :--: | :--: | :--: |
 | **Physical** | CPU(core) | DRAM | Disk, Flash | Device | Network |
 | **Virtual** | Process, Thread | Virtual memory, Page | File, Directory | Driver | Protocol |
 
-※ Access control, Security는 추상적 형태로만 존재함 (물리적 자원 X)<br>
+※ Access control, Security는 논리적 형태로만 존재함 (물리적 자원 X)<br>
 
 <img src="https://www.oreilly.com/api/v2/epubs/1565922921/files/tagoreillycom20070301oreillyimages146960.png" width=500px>
 <br><br>
@@ -208,14 +205,14 @@ System call은 mode switch를 발생시킴으로써 구현된다.<br>
   - 소프트웨어를 보호하기 위해서
   - 일반 프로그램에 문제가 생기면 해당 프로그램만 죽음
   - 운영체제에 문제가 생기면 위에서 동작하고 있던 모든 프로그램이 죽음
-  - 따라서 운영체제는 일반 프로그램과는 다르게 보호할 필요가 있음 <br>→ mode로 동작 환경 구분
+  - 따라서 운영체제는 일반 프로그램과는 다르게 보호할 필요가 있음 → mode로 동작 환경 구분
 
 </details>
 <br>
 <img src="https://forns.lmu.build/assets/images/spring-2018/cmsi-387/week-4/syscall.png" width=500px><br>
 
 1. 사용자 프로그램은 기본적으로 **user mode**에서 동작한다.
-2. 사용자 프로그램이 커널에 어떤 작업을 요청해야 하는 경우(e.g. 새 파일 만들기),<br> **시스템콜(e.g. open())을 호출해** 작업을 요청한다.
+2. 사용자 프로그램이 커널에 어떤 작업을 요청해야 하는 경우(e.g. 새 파일 만들기), **시스템콜(e.g. open())을 호출해** 작업을 요청한다.
 3. 시스템콜은 커널에서 수행되어야 하기 때문에 **mode switch**가 발생한다.
 4. **kernel mode**에서 작업을 수행하고 return한다.
 5. 다시 **mode switch**가 발생하여 **user mode**로 돌아간다.
@@ -223,11 +220,12 @@ System call은 mode switch를 발생시킴으로써 구현된다.<br>
 <br><br>
 
 ## 📍 CPU 가상화 (Virtualizing CPU)
+### 📝 정의
 **CPU 가상화**란 1개(또는 2-4개)의 물리적 CPU를 사용자에게 **여러 개의 CPU**가 있는 것 보여지는 것이다.<br>
 즉, 여러 개의 프로그램이 수행됨으로써 사용자가 여러 개의 CPU가 있는 것처럼 느끼는 것이다.<br>
 (하나의 프로그램이 수행을 위해선 하나의 CPU가 필요함)
 
-**예시 프로그램**
+### 📝 예시 프로그램
 ```c
 // cpu.c - Loops and Prints
 
@@ -264,7 +262,7 @@ A
 - 1초 쉬고 A 출력하고 다시 1초 쉬고 A 출력하는 과정이 반복됨
 - ```cpu``` 프로그램이 1번 수행됨 → process 1개 만들어짐
 
-**수행 결과2 - 병행**
+**수행 결과2 - 병렬 수행**
 ```
 prompt> ./cpu A & ./cpu B & ./cpu C & ./cpu D &
 [1] 7353
@@ -303,3 +301,98 @@ A
 위 예에서 ```&```는 ```myprogram```을 백그라운드에서 실행시키고, 사용자는 셸 프롬프트를 반환받아 다른 명령어를 계속해서 입력할 수 있도록 한다.
 
 <br><br>
+
+## 📍 메모리 가상화 (Virtualizing Memory)
+### 📝 정의
+**메모리 가상화**란 실제 물리적인 메모리는 하나지만, **프로세스들마다 무한하고 독립적인 메모리를 가지고 있다**고 느끼는 것이다.<br>
+(실제로는 여러 프로세스가 하나의 제한된 메모리를 공유함)
+
+### 📝 예시 프로그램
+```c
+// mem.c
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "common.h"
+
+int main(int argc, char *argv[]) {
+  if (argc != 2) {
+    fprintf(stderr, "usage: mem <value>\n");
+    exit(1);
+    }
+  int *p = malloc(sizeof(int)); // 4byte 메모리 공간 할당받아 p로 가리킴
+  assert(p != NULL); // assert 함수 인자의 조건이 만족되면 계속 수행, 아니면 에러 처리 -> 프로그램의 신뢰성을 향상시키는 방법
+  printf("(%d) addr pointed to by p: %p\n", getpid(), p);
+  *p = 0; // p가 가리키는 곳 0으로 초기화
+  while (1) {
+    Spin(1); // 1초 동안 대기
+    *p = *p + 1; // p가 가리키는 곳의 값 1 증가시킴
+    printf("(%d) value of p: %d\n", getpid(), *p);
+  }
+  return 0;
+}
+```
+
+**수행 결과1**
+```
+prompt> ./mem
+(2134) address pointed to by p: 0x200000
+(2134) p: 1
+(2134) p: 2
+(2134) p: 3
+(2134) p: 4
+(2134) p: 5
+^C
+```
+- pid가 2134인 프로세스 만들어짐
+- 2134 프로세스의 메모리 주소는 0x200000
+- mem.c 프로그램을 하나만 수행하면 특별한 상황 없음. 예상한 결과대로 출력됨
+
+
+**수행 결과2 - 병렬 수행**
+```
+prompt> ./mem & ./mem &
+[1] 24113
+[2] 24114
+(24113) address pointed to by p: 0x200000
+(24114) address pointed to by p: 0x200000
+(24113) p: 1
+(24114) p: 1
+(24114) p: 2
+(24113) p: 2
+(24113) p: 3
+(24114) p: 3
+(24113) p: 4
+(24114) p: 4
+```
+- 2개의 프로세스가 만들어짐 (각각의 pid는 24113, 24114)
+- 같은 메모리 공간을 사용 중인 것처럼 보이지만 수행 결과를 보면 **독립적으로 p의 값이 증가**되는 것을 알 수 있음
+
+<img src="https://github.com/ghi512/ghi-log/assets/77954741/46f3fddd-eee5-46f6-a13c-bc58f33235ee" width="500"><br>
+- 물리 메모리는 하나지만, 프로세스마다 가상 메모리를 가짐
+- 각 프로세스는 독립적인 메모리를 가졌다고 느껴짐 (메모리 가상화)
+- 두 프로세스의 가상 메모리 주소 값이 우연히 일치할 수 있지만 사실 두 주소는 독립적임
+
+<br><br>
+
+## 📍 병행성 (Concurrency)
+
+### 📝 Background: Scheduling Entity
+
+### 📝 정의
+
+### 📝 예시 프로그램
+
+<br><br>
+
+## 📍 영속성 (Persistence)
+
+### 📝 Background: DRAM vs Disk
+
+### 📝 정의
+
+### 📝 예시 프로그램
+
+<br><br>
+
+## 📍 운영체제 설계 목표
