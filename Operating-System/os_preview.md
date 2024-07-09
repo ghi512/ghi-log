@@ -1,8 +1,8 @@
 # Operating System Preview & Background
-## about OSTEP
-[OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/)은 Operating Systems: Three Easy Pieces의 준말으로, 운영체제는 3개의 조각으로 나뉜다는 의미이다.
+## 📍 about OSTEP
+[OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/)은 Operating Systems: Three Easy Pieces의 준말으로, 운영체제를 중요한 3개의 조각으로 나눠 볼 수 있다는 의미다.
 <br>
-![OSTEP의 3조각](https://github.com/ghi512/ghi-log/assets/77954741/25b0431a-ed0a-4a95-977f-f2c929511600)<br>
+<img src="https://github.com/ghi512/ghi-log/assets/77954741/25b0431a-ed0a-4a95-977f-f2c929511600" width=500px><br>
 
 1. **Virtualization; 가상화**
     - CPU 가상화: 프로세스, 직접 수행, 스케줄링
@@ -13,9 +13,9 @@
     - 파일 시스템(FS), 하드디스크드라이브(HDD), 파일, 디렉토리
 <br><br>
 
-## Background
-### 컴퓨터 시스템의 층 구조 (Layered Structure)
-![computer system - layered](https://media.geeksforgeeks.org/wp-content/uploads/needofos.png)<br>
+## 📍 Background
+### 📝 컴퓨터 시스템의 층 구조 (Layered Structure)
+<img src="https://media.geeksforgeeks.org/wp-content/uploads/needofos.png" width=500px><br>
 
 | 층 구조 | 예시1 | 예시2 |
 | :--------------------: | :--------------------: | :--------------------: |
@@ -26,10 +26,10 @@
 
 <br><br>
 
-### 프로그램이 수행될 때 어떤 일이 일어날까?
+### 📝 프로그램이 수행될 때 어떤 일이 일어날까?
 #### [컴퓨터 구성요소: CPU, 메인 메모리, I/O 모듈]
-컴퓨터 시스템은 아래 그림과 같이 CPU, 메인 메모리, I/O 모듈의 세 파트로 나눌 수 있다. 세 장치는 버스(bus)로 연결된다.<br>
-![computer components](https://voer.edu.vn/post-file/2d1c9e51/11893.png)<br>
+컴퓨터 시스템의 주요 구성요소에는 CPU, 메인 메모리, I/O가 있고, 장치들은 버스(bus)로 연결된다.<br>
+<img src="https://voer.edu.vn/post-file/2d1c9e51/11893.png" width=500px><br>
 
 **CPU**<br>
 CPU 내부엔 다양한 레지스터들이 존재한다.
@@ -40,30 +40,27 @@ CPU 내부엔 다양한 레지스터들이 존재한다.
 ※ 위의 명칭은 공통 레지스터 명칭이다. x86 아키텍처의 레지스터는 eip, eax, ebx 등으로 불린다.<br>
 
 **메인 메모리**<br>
-instruction, data를 저장한다.<br>
-
-→ 프로그램이 수행될 때는 CPU와 메모리가 협업한다. **메인 메모리**에 명령어와 데이터를 저장하고, **CPU**의 다양한 레지스터들이 명령어를 가져와서 처리하는 이 과정을 반복한다.(fetch & execute)<br><br>
+instruction, data를 저장한다.<br><br>
 
 #### [프로그램 수행 과정]
+
 **Instruction Cycle(명령 주기)**<br>
-프로그램 수행 과정은 fetch와 execute의 반복이다.<br>
-![basic instruction cycle](https://github.com/ghi512/ghi-log/assets/77954741/5b1d0bb7-55e0-4660-a9b3-02ed9cd0050a)<br>
+프로그램이 수행될 때는 CPU와 메모리가 협업한다.<br>
+<img src="https://github.com/ghi512/ghi-log/assets/77954741/5b1d0bb7-55e0-4660-a9b3-02ed9cd0050a" width=500px><br>
 
-- Start: 프로그램이 수행되면
-- Fetch: 명령어 가져오고
-- Execute: 명령어 수행하고
+- Start: 프로그램 수행
+- Fetch: 명령어 가져옴 (메인 메모리 -> CPU)
+- Execute: 명령어 수행 (CPU or CPU -> 메인 메모리)
 
-다시 명령어 가져오고 수행하는 과정을 반복한다.<br><br>
+<u>메인 메모리</u>에 명령어와 데이터를 저장하고, <u>CPU</u>의 다양한 레지스터들이 명령어를 가져와 처리한다.<br> 프로그램 수행은 <u>fetch와 execute의 반복</u>이다.<br><br>
 
 **프로그램 수행 예시 - 명령어 1개**<br>
 아래 예시의 CPU는 16비트 명령어를 사용한다.<br>
 
-💡 1단계 | 초기 상태 <br>
-
 <details>
   <summary>Memory: Instruction format (e.g. 300-302)</summary>
 
-![instruction format](https://github.com/ghi512/ghi-log/assets/77954741/841be3fc-8b24-4fd6-84b6-b4fd9fa9ab05)
+<img src="https://github.com/ghi512/ghi-log/assets/77954741/841be3fc-8b24-4fd6-84b6-b4fd9fa9ab05" width=500px><br>
 
 - 상위 4비트: Opcode
     - 기능 수행
@@ -78,81 +75,231 @@ instruction, data를 저장한다.<br>
 <details>
   <summary> Memory: Data format (e.g. 940-941)</summary>
 
-![data format](https://github.com/ghi512/ghi-log/assets/77954741/e22d1e24-38bf-467f-b70e-df4beb4b4d39)
+<img src="https://github.com/ghi512/ghi-log/assets/77954741/e22d1e24-38bf-467f-b70e-df4beb4b4d39" width=500px><br>
 - 상위 1비트: 부호 (사인 비트)
 - 하위 15비트: 실제 숫자
 <br>
 </details>
 <br>
 
-![step1](https://github.com/ghi512/ghi-log/assets/77954741/9c6e557b-fe62-4481-8ed8-570bdd12b9a4)<br>
+<img src="https://github.com/ghi512/ghi-log/assets/77954741/e3276537-1909-42b8-af6a-75184f037977" width=500px><br>
 
-| CPU 레지스터 | 값 | 설명 |
-| :--: | :--:| :--:|
-| PC | 300 | 다음 수행할 명령어의 주소는 300이다. |
-| IR | 1940 | 주소 300에 있는 명령어를 패치한다.<br> IR의 값은 1940이 된다.|
-
-<br>
-
-💡 2단계 <br>
-
-![step2](https://github.com/ghi512/ghi-log/assets/77954741/a70a64a3-914b-4742-b99a-5ea65ccb8682)
-
-
-| CPU 레지스터 | 값 | 설명 |
-| :--: | :--:| :--:|
-| PC | 301 | step 1에서 주소 300의 명령어를 패치했으므로<br> 다음 주소값인 301로 값이 변경된다. |
-| IR | 1940 | 명령어 1940을 수행한다.<br> 즉, 메모리 주소 940에 있는 값을 AC에 load(1)한다.|
-| AC | 0003 | 메모리 주소 940에 있는 값 0003이 AC에 load된다.|
-
-<br>
-
+Step 1
+- fetch 단계
+- PC는 다음 수행할 명령어의 위치를 저장. 현재 수행할 명령어의 위치는 300
+- 메인 메모리의 주소 300에서 명령어를 IR에 가져옴
+- IR의 명령어 해석
+  - 1940: 1(0001; Load AC from Memory) + 940(처리할 데이터의 주소; 데이터값 3)
+  - 940번지에 있는 데이터를 load(메인 메모리 -> CPU의 AC)한다.
 - AC: 범용 레지스터(Accumulator). 예로 eax가 있음.
-
-- 명령어 **1940**의 의미
-  - 1 : 메모리에서 AC로 load 한다.
-  - 940 : 명령을 수행할 메모리의 주소
-
 <br>
 
-💡 3단계 <br>
+Step 2
+- execute 단계
+- PC는 다음 수행할 명령어의 위치 301로 변경됨
+- AC에 3이 저장됨
+<br>
 
-![step3](https://github.com/ghi512/ghi-log/assets/77954741/7456e89b-69f6-424e-8f97-d27fd246ff48)
+Step 3
+- fetch 단계
+- PC가 가리키는 301번지의 명령어를 IR에 가져옴
+- IR의 명령어 해석
+  - 5941: 5(0101; Add to AC from Memory) + 941(처리할 데이터의 메모리 주소)
+  - 941번지에 있는 데이터를 add함
+<br>
 
+Step 4
+- execute 단계
+- PC는 다음 수행할 명령어의 위치 302로 변경됨
+- AC의 값이 5가 됨 (3+2)
 
+Step 5
+- fetch 단계
+- PC가 가리키는 302번지의 명령어를 IR에 가져옴
+- IR의 명령어 해석
+  - 2941: 2(0010; Store AC to Memory) + 941(처리할 데이터의 메모리 주소)
+  - AC에 있는 값 5를 941번지에 store함
+<br>
 
-💡 4단계 <br>
+Step 6
+- execute 단계
+- PC는 다음 수행할 명령어의 위치 303로 변경됨
+- 메모리 주소 941에 5가 저장됨
+<br>
 
-💡 5단계 <br>
+결론
+- ```b = a+b;```를 수행하는 과정
+- 초기값: a=3, b=2
+- step 1,2 : a 읽어옴
+- step 3,4 : b 읽어와서 a와 더함
+- step 5,6 : b에 더한 결과 저장
+<br><br>
 
-💡 6단계 <br>
+#### [프로그램 수행에 필요한 다양한 작업]
+실제 컴퓨터는 더 복잡하기 때문에 fetch & execute 이외에 다양한 작업들이 요구됨 <br>
 
+<img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*f3zluXpJOncOpILMdD5T3A.png" width=500px><br>
 
+- loading
+  - disk에 있는 프로그램을 main memory로 가져오는 작업
+  - 프로그램 수행 시 fetch 이전에 선행되어야 함
+- memory management
+  - loading을 하려면 main memory 관리가 필요 (빈 공간 확인 등)
+- scheduling
+  - 수행 중인 여러 프로그램을 어떻게 스케줄링 할 지
+- context switching (문맥 교환)
+- I/O processing
+  - 출력(e.g. printf) 시 I/O 작업
+- file management
+- IPC
+<br>
+
+운영체제는 위 작업들을 수행함으로써 <u>프로그램이 수행되기 쉬운 환경</u>을 제공한다.
+<br><br>
+
+### 📝 운영체제의 정의 (definition)
+자원을 관리하고, 추상화를 제공하는 시스템 소프트웨어
+
+#### 1) 자원 관리자 (Resource manager)
+- 자원(physical, virtual)을 관리한다
+- **Physical Resource**: CPU, DRAM, Disk, Flash, Device, Network 등
+- **Virtual Resource**: Process, Thread, Virtual memory, Page, File, Directory, Driver, Protocol, Access control, Security 등
+
+#### 2) 추상화 제공 (Virtualization, Abstraction)
+물리적 자원으로 추상적(논리적) 형태로 제공한다.
+
+| Resource | 1 | 2 | 3 | 4 | 5 |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+| **Physical** | CPU(core) | DRAM | Disk, Flash | Device | Network |
+| **Virtual** | Process, Thread | Virtual memory, Page | File, Directory | Driver | Protocol |
+
+※ Access control, Security는 추상적 형태로만 존재함 (물리적 자원 X)<br>
+
+<img src="https://www.oreilly.com/api/v2/epubs/1565922921/files/tagoreillycom20070301oreillyimages146960.png" width=500px>
+<br><br>
+
+### 📝 시스템콜 (System call)
+**OS가 사용자**(user programs & applications)**에게 제공하는 인터페이스(APIs)** 로,<br>
+프로세스 관리, 파일 관리, 장치 관리, 정보 관리, 통신, 보호 등의 기능을 제공한다.
+
+<details>
+  <summary> 시스템콜 예시</summary>
+
+| 제공 기능               | Windows                                                                              | Unix(Linux)                            |
+|:-------------------------:|:--------------------------------------------------------------------------------------:|:----------------------------------------:|
+| Process Control         | CreateProcess()<br>ExitProcess()<br>WaitForSingleObject()                            | fork()<br>exit()<br>wait()             |
+| File Manipulation       | CreateFile()<br>ReadFile()<br>WriteFile()<br>CloseHandle()                           | open()<br>read()<br>write()<br>close() |
+| Device Manipulation     | SetConsoleMode()<br>ReadConsole()<br>WriteConsole()                                  | ioctl()<br>read()<br>write()           |
+| Information Maintenance | GetCurrentProcessId()<br>SetTimer()<br>Sleep()                                       | getpid()<br>alarm()<br>sleep()         |
+| Communication           | CreatePipe()<br>CreateFileMapping()<br>MapViewOfFile()                               | pipe()<br>shmget()<br>mmap()           |
+| Protection              | SetFileSecurity()<br>InitlializeSecurityDescriptor()<br>SetSecurityDescriptorGroup() | chmod()<br>umask()<br>chown()          |
+</details>
+<br>
+
+#### 시스템콜의 구현: Mode Switch
+System call은 mode switch를 발생시킴으로써 구현된다.<br>
+<details>
+  <summary> Mode</summary>
+
+- mode의 종류
+  1) **user mode**: 일반 애플리케이션 동작
+  2) **kernel mode**: 운영체제 동작
+- mode를 나눈 이유
+  - 소프트웨어를 보호하기 위해서
+  - 일반 프로그램에 문제가 생기면 해당 프로그램만 죽음
+  - 운영체제에 문제가 생기면 위에서 동작하고 있던 모든 프로그램이 죽음
+  - 따라서 운영체제는 일반 프로그램과는 다르게 보호할 필요가 있음 <br>→ mode로 동작 환경 구분
+
+</details>
+<br>
+<img src="https://forns.lmu.build/assets/images/spring-2018/cmsi-387/week-4/syscall.png" width=500px><br>
+
+1. 사용자 프로그램은 기본적으로 **user mode**에서 동작한다.
+2. 사용자 프로그램이 커널에 어떤 작업을 요청해야 하는 경우(e.g. 새 파일 만들기),<br> **시스템콜(e.g. open())을 호출해** 작업을 요청한다.
+3. 시스템콜은 커널에서 수행되어야 하기 때문에 **mode switch**가 발생한다.
+4. **kernel mode**에서 작업을 수행하고 return한다.
+5. 다시 **mode switch**가 발생하여 **user mode**로 돌아간다.
 
 <br><br>
 
-#### [프로그램 수행 시 사용되는 다양한 하드웨어]
-![execute instruction - hw](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*f3zluXpJOncOpILMdD5T3A.png)
+## 📍 CPU 가상화 (Virtualizing CPU)
+**CPU 가상화**란 1개(또는 2-4개)의 물리적 CPU를 사용자에게 **여러 개의 CPU**가 있는 것 보여지는 것이다.<br>
+즉, 여러 개의 프로그램이 수행됨으로써 사용자가 여러 개의 CPU가 있는 것처럼 느끼는 것이다.<br>
+(하나의 프로그램이 수행을 위해선 하나의 CPU가 필요함)
 
+**예시 프로그램**
+```c
+// cpu.c - Loops and Prints
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <assert.h>
+#include "common.h" // 사용자(Remzi)가 직접 만든 헤더 파일
+
+int main(int argc, char *argv[])
+{
+  if (argc != 2) { // 인자가 없는 경우 종료 (잘못된 사용법)
+    fprintf(stderr, "usage: cpu <string>\n");
+    exit(1);
+    }
+  char *str = argv[1]; // 인자의 주소를 포인터 변수 str에 받음
+  while (1) { // 무한 루프
+    Spin(1); // 1초동안 기다림 (common.h에 정의된 함수)
+    printf("%s\n", str); // 인자로 준 값 출력
+  }
+  return 0;
+}
+```
+
+**수행 결과1**
+```
+prompt> gcc -o cpu cpu.c -Wa;;
+prompt> ./cpu "A"
+A
+A
+A
+^C
+```
+- 1초 쉬고 A 출력하고 다시 1초 쉬고 A 출력하는 과정이 반복됨
+- ```cpu``` 프로그램이 1번 수행됨 → process 1개 만들어짐
+
+**수행 결과2 - 병행**
+```
+prompt> ./cpu A & ./cpu B & ./cpu C & ./cpu D &
+[1] 7353
+[2] 7354
+[3] 7355
+[4] 7356
+A
+B
+D
+C
+A
+B
+D
+C
+A
+...
+```
+
+- &는 백그라운드 수행한다는 의미
+- ```cpu``` 프로그램이 4번 수행됨 → process 4개 만들어짐
+- &가 있기 때문에 동시에 4개의 process가 만들어진다
+- 각각의 프로세스는 각자 독립적인 CPU를 갖고 있는 것 처럼 수행됨 → **CPU 가상화**
+- 이러한 CPU 가상화를 하려면 **process**와 **scheduling**의 개념을 알아야 한다.
 <br><br>
 
-### 운영체제의 정의 (definition)
-
+## 📍 퀴즈
+1️⃣ OS is defined as a resource manager. What kind of virtual resources are managed by OS for CPU, DRAM, and disk?<br>
+→ CPU는 Process와 thread로, DRAM은 Virtual memory와 page로, Disk는 File과 Directory로 가상화된다.
 <br><br>
 
-### 시스템콜 (System call)
-
-<br><br>
-
-## CPU 가상화 (Virtualizing CPU)
-
-<br><br>
-
-## 퀴즈
-1️⃣
-
-<br><br>
-
-2️⃣
+2️⃣ What is the role of "&" in the above example (running "cpu.c" - 2).<br>
+→ 셸 스크립트와 터미널 명령어에서 &는 명령어를 백그라운드에서 실행시키기 위해 사용된다.
+```shell
+./myprogram &
+```
+위 예에서 ```&```는 ```myprogram```을 백그라운드에서 실행시키고, 사용자는 셸 프롬프트를 반환받아 다른 명령어를 계속해서 입력할 수 있도록 한다.
 
 <br><br>
