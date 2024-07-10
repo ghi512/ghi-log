@@ -502,3 +502,14 @@ int main(int argc, char *argv[]) {
 - Mechanism(기법)
   - How to do? 어떻게 (policy를 구현)할 것인가?
   - e.g. 프로세스 스케줄링을 tree 구조로 구현할 것인가? array로 구현할 것인가?
+
+<br><br>
+
+## 📍 퀴즈
+1️⃣ In today's lecture, we executed two processes (whose pids are 24113 and 24114) and discussed the differences between physical memory(PM) and virtual memory(VM). Explain the differences using two these processes.<br>
+→ 실제 물리 메모리(PM)는 하나지만 프로세스들은 각각 하나의 메모리를 가지고 있다는 환상을 제공하는 것이 가상 메모리(VM)이다. 예를 들어 pid가 24113인 프로세스에서 변수 a의 주소가 10번지이고 pid가 24114인 프로세스에서 변수 a의 주소가 10번지인 경우, 두 변수는 같은 메모리를 가리키고 있는 것처럼 보이지만 실제로는 각각의 가상 메모리의 주소를 갖고 있는 것이다. 물리 메모리에 두 변수는 각각 다른 주소에 저장된다.
+<br><br>
+
+2️⃣ When we manage a disk, we need to consider the persistence carefully. Explain why the persistence is considered for a disk using the difference between disks and DRAM (one of three differeces)?<br>
+→ DRAM은 휘발성이고 Disk는 비휘발성이다. DRAM에 데이터를 저장했을 때 전원이 공급되지 않으면 데이터가 손실되는 문제가 발생할 수 있다. 따라서 비휘발성인 Disk에 데이터를 저장해야 한다.
+<br><br>
