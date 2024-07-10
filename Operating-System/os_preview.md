@@ -220,12 +220,11 @@ System call은 mode switch를 발생시킴으로써 구현된다.<br>
 <br><br>
 
 ## 📍 CPU 가상화 (Virtualizing CPU)
-### 📝 정의
 **CPU 가상화**란 1개(또는 2-4개)의 물리적 CPU를 사용자에게 **여러 개의 CPU**가 있는 것 보여지는 것이다.<br>
 즉, 여러 개의 프로그램이 수행됨으로써 사용자가 여러 개의 CPU가 있는 것처럼 느끼는 것이다.<br>
-(하나의 프로그램이 수행을 위해선 하나의 CPU가 필요함)
+(하나의 프로그램이 수행을 위해선 하나의 CPU가 필요함)<br><br>
 
-### 📝 예시 프로그램
+**예시 프로그램**
 ```c
 // cpu.c - Loops and Prints
 
@@ -240,7 +239,7 @@ int main(int argc, char *argv[])
   if (argc != 2) { // 인자가 없는 경우 종료 (잘못된 사용법)
     fprintf(stderr, "usage: cpu <string>\n");
     exit(1);
-    }
+  }
   char *str = argv[1]; // 인자의 주소를 포인터 변수 str에 받음
   while (1) { // 무한 루프
     Spin(1); // 1초동안 기다림 (common.h에 정의된 함수)
@@ -303,11 +302,10 @@ A
 <br><br>
 
 ## 📍 메모리 가상화 (Virtualizing Memory)
-### 📝 정의
 **메모리 가상화**란 실제 물리적인 메모리는 하나지만, **프로세스들마다 무한하고 독립적인 메모리를 가지고 있다**고 느끼는 것이다.<br>
-(실제로는 여러 프로세스가 하나의 제한된 메모리를 공유함)
+(실제로는 여러 프로세스가 하나의 제한된 메모리를 공유함)<br><br>
 
-### 📝 예시 프로그램
+**예시 프로그램**
 ```c
 // mem.c
 #include <unistd.h>
@@ -319,7 +317,7 @@ int main(int argc, char *argv[]) {
   if (argc != 2) {
     fprintf(stderr, "usage: mem <value>\n");
     exit(1);
-    }
+  }
   int *p = malloc(sizeof(int)); // 4byte 메모리 공간 할당받아 p로 가리킴
   assert(p != NULL); // assert 함수 인자의 조건이 만족되면 계속 수행, 아니면 에러 처리 -> 프로그램의 신뢰성을 향상시키는 방법
   printf("(%d) addr pointed to by p: %p\n", getpid(), p);
@@ -368,7 +366,7 @@ prompt> ./mem & ./mem &
 - 2개의 프로세스가 만들어짐 (각각의 pid는 24113, 24114)
 - 같은 메모리 공간을 사용 중인 것처럼 보이지만 수행 결과를 보면 **독립적으로 p의 값이 증가**되는 것을 알 수 있음
 
-<img src="https://github.com/ghi512/ghi-log/assets/77954741/46f3fddd-eee5-46f6-a13c-bc58f33235ee" width="500"><br>
+<img src="https://github.com/ghi512/ghi-log/assets/77954741/46f3fddd-eee5-46f6-a13c-bc58f33235ee" width="700"><br>
 - 물리 메모리는 하나지만, 프로세스마다 가상 메모리를 가짐
 - 각 프로세스는 독립적인 메모리를 가졌다고 느껴짐 (메모리 가상화)
 - 두 프로세스의 가상 메모리 주소 값이 우연히 일치할 수 있지만 사실 두 주소는 독립적임
@@ -376,23 +374,131 @@ prompt> ./mem & ./mem &
 <br><br>
 
 ## 📍 병행성 (Concurrency)
+cpu 2개 또는 4개를 동시에 실행시키고 싶은 경우, 여러 스케줄링 객체(scheduling entity)을 만들면 됨.<br>
+새로운 스케줄링 객체를 만듦으로써 CPU를 더 많이 사용해 병렬 처리를 가능하게 하는 두 모델이 있음.<br>
 
-### 📝 Background: Scheduling Entity
+**스케줄링 객체 생성 방법 (programming model)**
+1. process(task) model
+  - fork() 사용
+  - 자식과 부모가 자원을 공유하지 않음 
+2. thread model
+  - pthread() 사용
+  - 자식과 부모가 자원을 공유함
 
-### 📝 정의
+→ 병렬 처리하는 경우 **같은 데이터(공유 자원)에 process 또는 thread가 동시에 접근**하려할 때 발생하는 **concurrency 문제**가 발생할 수 있다. OS는 이에 대한 제어를 제공해야 한다.<br><br>
 
-### 📝 예시 프로그램
+**예시 프로그램**
+```c
+// thread.c
+#include <stdio.h>
+#include <stdlib.h>
+#include "common.h"
 
+volatile int counter = 0;
+int loops;
+
+void *worker(void *arg) { // counter를 증가시키는 함수
+    int i;
+    for (i = 0; i < loops; i++) {
+      counter++;
+    }
+    return NULL;
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+      fprintf(stderr, "usage: threads <loops>\n");
+      exit(1);
+    }
+
+    loops = atoi(argv[1]); // 몇 번 loop할 지를 인자로 받음
+    pthread_t p1, p2;
+    printf("Initial value : %d\n", counter); // 초기값 출력
+
+    Pthread_create(&p1, NULL, worker, NULL); // 자식 thread 1, worker를 수행
+    Pthread_create(&p2, NULL, worker, NULL); // 자식 thread 2, worker를 수행
+    Pthread_join(p1, NULL);
+    Pthread_join(p2, NULL);
+    printf("Final value : %d\n", counter);
+    return 0;
+}
+```
+
+**수행 결과1**
+```
+prompt> gcc -o thread thread.c -Wall -pthread
+prompt> ./threads 1000
+Initial value : 0
+Final value : 2000
+```
+- thread 모델은 부모와 자식이 전역 변수를 공유함
+- 최종값으로 예상한 결과인 2000 출력됨 (counter: 0 -thread1수행-> 1000 -thread2수행-> 2000)
+
+
+**수행 결과2**
+```
+prompt> ./threads 100000
+Initial value : 0
+Final value : 143012
+prompt> ./threads 100000
+Initial value : 0
+Final value : 137298
+```
+- 예상한 결과 200000이 나오지 않고, 수행할 때마다 결과가 다름
+- loops가 커졌을 때, 원자성이 만족되지 않았고 병행성(concurrency)이 지켜지지 않아 이상한 결과가 출력됨
+<br>
+
+→ 병행성 제어가 되면 여러 프로세스들이 실제로는 자원을 두고 경쟁하고 있지만, 공유 자원에 대해 협력적으로 접근하는 것 같은 환상이 제공된다.
 <br><br>
 
 ## 📍 영속성 (Persistence)
+전원이 공급되지 않아도 데이터를 계속 영속적으로 유지하는 것<br><br>
+**DRAM vs Disk**
+|            | DRAM |       Disk      |
+|:----------:|:----:|:---------------:|
+|  용량  |  ↓(4GB)    |    ↑(500GB)             |
+|    속도   |   ↑(100ns)  |   ↓(10ms)              |
+|   접근 단위   | Byte | Sector(512Byte) |
+| **지속성** |휘발성|비휘발성|
 
-### 📝 Background: DRAM vs Disk
+데이터를 **영속적**으로 사용하고 싶으면 DRAM이 아닌 **Storage(Disk, SSD))에 저장**해야 하고, 이때 **file을 생성**해서 쓴다.<br>
 
-### 📝 정의
+<details>
+<summary> 접근 단위 ...</summary>
 
-### 📝 예시 프로그램
+- DRAM은 접근 단위가 byte이므로 CPU에 직접 접근이 가능함
+- Disk는 CPU에 직접 접근이 불가능하다. (CPU는 Byte 단위로만 접근 가능)
+- 때문에 Disk의 데이터를 DRAM에 올리는 loading 과정이 필요하다.
+</details>
+
+<br>
+
+**예시 프로그램**
+```c
+int main(int argc, char *argv[]) {
+  int fd = open("/tmp/file", O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+  assert(fd > -1);
+  int rc = write(fd, "hello world\n", 13);
+  close(fd);
+  return 0;
+} 
+```
+- open, write를 사용해 명식적으로 데이터를 씀으로써 persitence 보장
+- persistence는 데이터가 항상 안전한 비휘발성 area에서 관리되는 것 같은 추상화를 제공함
 
 <br><br>
 
 ## 📍 운영체제 설계 목표
+- Abstraction (추상화)
+- Performance (성능 최적화)
+- Protection (보호)
+- Reliability (신뢰성)
+<br><br>
+
+**Policy와 Mechanism의 차이점**
+- Policy(정책)
+  - which (or what) to do? 무엇을 할 것인가?
+  - e.g. 프로세스 A, B, C 중 누구를 먼저 수행할 것인가?
+- Mechanism(기법)
+  - How to do? 어떻게 (policy를 구현)할 것인가?
+  - e.g. 프로세스 스케줄링을 tree 구조로 구현할 것인가? array로 구현할 것인가?
