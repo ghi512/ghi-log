@@ -251,7 +251,7 @@ int main(int argc, char *argv[])
 
 **수행 결과1**
 ```
-prompt> gcc -o cpu cpu.c -Wa;;
+prompt> gcc -o cpu cpu.c -Wall
 prompt> ./cpu "A"
 A
 A
